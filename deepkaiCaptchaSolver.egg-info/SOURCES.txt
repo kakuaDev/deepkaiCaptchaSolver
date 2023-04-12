@@ -1,0 +1,8 @@
+setup.py
+deepkaiCaptchaSolver/__init__.py
+deepkaiCaptchaSolver/core.py
+deepkaiCaptchaSolver.egg-info/PKG-INFO
+deepkaiCaptchaSolver.egg-info/SOURCES.txt
+deepkaiCaptchaSolver.egg-info/dependency_links.txt
+deepkaiCaptchaSolver.egg-info/requires.txt
+deepkaiCaptchaSolver.egg-info/top_level.txt
