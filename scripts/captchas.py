@@ -55,7 +55,7 @@ def gen_captcha_images(words):
 
 def main():
     # remove_output(TRAIN_DIR)
-    words = read_dictionary()
+    words = read_dictionary(dataset_size=10000)
     gen_captcha_images(words)
 
 

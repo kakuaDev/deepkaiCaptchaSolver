@@ -13,7 +13,7 @@ if __name__ == "__main__":
     CM = CreateModel(train_img_path_list, img_width, img_height)
 
     # Performing model training
-    model = CM.train_model(epochs=1000)
+    model = CM.train_model(epochs=8000)
 
     # Saving the weights learned by the model to a file
     model.save_weights("weights.h5")
