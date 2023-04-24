@@ -4,8 +4,8 @@ import os
 import random
 import string
 
-CHARS_SET = string.digits + string.ascii_uppercase + string.ascii_lowercase
-TRAIN_DIR = 'train'
+CHARS_SET = string.digits + string.ascii_letters
+TRAIN_DIR = 'synthetic'
 FONTS_DIR = 'fonts'
 
 
@@ -19,15 +19,16 @@ def remove_output(file_dir):
         os.mkdir(file_dir)
 
 
-def read_dictionary(dataset_size: int = 50):
+def create_dictionary(dataset_size: int = 50):
     words_list: list = []
     for _ in range(dataset_size):
-        word_length = random.randint(2, 10)
-        # Remove trailing end line char
-        word = "".join(random.sample(CHARS_SET, word_length))
-        if word not in words_list:
-            words_list.append(word)
-            yield word
+        for word_length in range(2, 11):
+            # word_length = random.randint(2, 10)
+            # Remove trailing end line char
+            word = "".join(random.sample(CHARS_SET, word_length))
+            if word not in words_list:
+                words_list.append(word)
+                yield word
     del words_list
 
 
@@ -40,22 +41,22 @@ def gen_captcha_image(image_captcha, text):
 def gen_captcha_images(words):
     image_captcha = ImageCaptcha(
         width=200,
-        height=80,
-        fonts=[os.path.join(FONTS_DIR, font) for font in os.listdir(FONTS_DIR)])
+        height=80)
+    # fonts=[os.path.join(FONTS_DIR, font) for font in os.listdir(FONTS_DIR)])
     for word in words:
-        chars_list = list(word)
+        """chars_list = list(word)
         random.shuffle(chars_list)
         shuffled_word = ''.join(list(map(
-            lambda char: char.upper() if random.random() <= 0.5 else char.lower(),
+            lambda char: char.upper() if random.random() <= random.random() else char.lower(),
             chars_list
-        )))
-        captcha_image = gen_captcha_image(image_captcha, shuffled_word)
-        captcha_image.save(os.path.join(TRAIN_DIR, shuffled_word + '.png'))
+        )))"""
+        captcha_image = gen_captcha_image(image_captcha, word)
+        captcha_image.save(os.path.join(TRAIN_DIR, word + '.png'))
 
 
 def main():
-    # remove_output(TRAIN_DIR)
-    words = read_dictionary(dataset_size=10000)
+    remove_output(TRAIN_DIR)
+    words = create_dictionary(dataset_size=120)
     gen_captcha_images(words)
 
 

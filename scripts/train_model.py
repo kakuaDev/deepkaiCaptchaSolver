@@ -1,19 +1,23 @@
 import glob
-from deepkaiCaptchaSolver.core import CreateModel
+from deepkaiCaptchaSolver.core import CaptchaSolver
+
 
 if __name__ == "__main__":
     # Training image data path
-    train_img_path_list = glob.glob("./train/*.png")
+    train_img_path_list = glob.glob("./train/*")
+    model_weights_path = "model/weights.h5"
 
     # Training image data size
     img_width = 200
     img_height = 80
 
     # Creating an instance that creates a model
-    CM = CreateModel(train_img_path_list, img_width, img_height)
+    cs = CaptchaSolver(
+        train_img_path_list,
+        img_width=img_width,
+        img_height=img_height,
+        n_samples=2000
+    )
 
     # Performing model training
-    model = CM.train_model(epochs=8000)
-
-    # Saving the weights learned by the model to a file
-    model.save_weights("weights.h5")
+    history, model = cs.train_model("weights.h5", epochs=10, load_weights=True)
